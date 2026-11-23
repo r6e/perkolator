@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+.coverage
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+_site/
+source/
+node_modules/

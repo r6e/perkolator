@@ -1,0 +1,24 @@
+version: 2
+updates:
+  - package-ecosystem: uv
+    directory: /
+    schedule:
+      interval: weekly
+    cooldown:
+      default-days: 7
+  - package-ecosystem: github-actions
+    directories:
+      - /
+      - /.github/actions/setup-project
+    schedule:
+      interval: weekly
+    cooldown:
+      default-days: 7
+  # The command line tool the watcher job runs. After a bump, re-check the
+  # flags in scripts/run-watcher.sh against the new version.
+  - package-ecosystem: npm
+    directory: /watcher
+    schedule:
+      interval: weekly
+    cooldown:
+      default-days: 7

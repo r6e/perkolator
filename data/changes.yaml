@@ -1,0 +1,20 @@
+changes:
+- id: 2026-11-23-equinox-unlisted
+  detected_on: 2026-11-23
+  summary: Equinox Credit is no longer shown on the issuer's public page
+  detail: The issuer's public Platinum Card page no longer shows the Equinox Credit.
+    The catalog entry is unchanged. Confirm in your Amex account whether this credit
+    is still available.
+- id: 2026-11-23-airbnb-experiences-unlisted
+  detected_on: 2026-11-23
+  summary: Airbnb Experiences Credit is no longer shown on the issuer's public page
+  detail: The issuer's public Platinum Card page no longer shows the Airbnb Experiences
+    Credit. The catalog entry is unchanged. Confirm in your Amex account whether this
+    credit is still available.
+- id: 2026-11-23-soulcycle-bike-unlisted
+  detected_on: 2026-11-23
+  summary: SoulCycle At-Home Bike Credit is no longer shown on the issuer's public
+    page
+  detail: The issuer's public Platinum Card page no longer shows the SoulCycle At-Home
+    Bike Credit. The catalog entry is unchanged. Confirm in your Amex account whether
+    this credit is still available.

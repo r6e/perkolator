@@ -1,0 +1,65 @@
+[project]
+name = "perkolator"
+version = "0.1.0"
+description = "Calendar feed of American Express Platinum Card benefit deadlines"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.12"
+dependencies = [
+    "icalendar>=7.3.2",
+    "pydantic>=2.14.4",
+    "pyyaml>=6.0.4",
+]
+
+[project.scripts]
+perkolator = "perkolator.cli:main"
+
+[build-system]
+requires = ["uv_build>=0.13.9,<0.14.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "mypy>=2.4.1",
+    "pre-commit>=4.7.0",
+    "pytest>=9.2.0",
+    "pytest-cov>=7.1.0",
+    "ruff>=0.17.6",
+    "types-pyyaml>=6.0.12.20261113",
+]
+
+[tool.uv]
+required-version = ">=0.13.9,<0.14"
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = ["D203", "D213", "COM812", "ISC001", "CPY001"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101", "S106", "PLR2004", "D103", "D100", "D104", "INP001", "E501"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.mypy]
+strict = true
+python_version = "3.12"
+plugins = ["pydantic.mypy"]
+
+[tool.pydantic-mypy]
+init_forbid_extra = true
+init_typed = true
+warn_required_dynamic_aliases = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["tests"]
+
+[tool.coverage.run]
+source = ["perkolator"]
+branch = true

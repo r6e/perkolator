@@ -1,0 +1,8 @@
+{
+  "name": "benefit-watcher-cli",
+  "private": true,
+  "description": "Pins the command line tool the watcher job runs.",
+  "dependencies": {
+    "@anthropic-ai/claude-code": "2.1.325"
+  }
+}

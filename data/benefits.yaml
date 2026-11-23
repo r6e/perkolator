@@ -1,0 +1,219 @@
+card: platinum-us-personal
+source_url: https://www.americanexpress.com/us/credit-cards/card/platinum/
+verified_on: 2026-11-23
+benefits:
+- id: digital-entertainment
+  name: Digital Entertainment Credit
+  amount_usd: 25
+  cadence: monthly
+  kind: auto
+  enrollment_required: true
+  action: Enroll once, then pay an eligible subscription directly with the partner
+    using the card
+  url: https://www.americanexpress.com/us/credit-cards/card/platinum/
+  notes: 'Partners: Disney+, ESPN streaming services, Hulu, The New York Times, Paramount+,
+    Peacock, The Wall Street Journal, and YouTube (YouTube TV, YouTube Music, YouTube
+    Premium including Premium Lite). Must be billed directly by the partner; app store
+    and other third-party billing does not count.'
+- id: uber-cash
+  name: Uber Cash
+  amount_usd: 15
+  amount_label: $15 ($35 in December)
+  cadence: monthly
+  kind: use
+  enrollment_required: true
+  action: Use on a U.S. Uber ride or Uber Eats order with Uber Cash toggled on and
+    an Amex card selected
+  url: https://www.uber.com/
+  notes: Add the card to the Uber account directly, not through Apple Pay or PayPal.
+    Expires at 11:59 PM Hawaii time on the last day of the month.
+- id: walmart-plus
+  name: Walmart+ Credit
+  amount_usd: 12.95
+  amount_label: $12.95 plus tax
+  cadence: monthly
+  kind: auto
+  enrollment_required: false
+  action: Pay a Walmart+ monthly membership with the card
+  url: https://www.americanexpress.com/us/credit-cards/card/platinum/
+  notes: Monthly plan only, one membership per account. Plus Ups and Business+ are
+    excluded.
+- id: resy
+  name: Resy Credit
+  amount_usd: 100
+  cadence: quarterly
+  kind: use
+  enrollment_required: true
+  action: Pay with the card at a U.S. restaurant shown as eligible on Resy, or on
+    Resy or Tock directly
+  url: https://resy.com/
+  notes: No Resy reservation needed. Restaurants inside hotels or food halls, delivery,
+    catering, gift cards and third-party payment apps may not count. Enrollment can
+    take 24 hours.
+- id: lululemon
+  name: lululemon Credit
+  amount_usd: 75
+  cadence: quarterly
+  kind: use
+  enrollment_required: true
+  action: Buy at a U.S. lululemon store, the lululemon website or the lululemon app
+    with the card
+  url: https://shop.lululemon.com/
+  notes: Excludes outlets, Like New, lululemon Studio and gift cards.
+- id: hotel-credit
+  name: Hotel Credit
+  amount_usd: 300
+  cadence: semiannual
+  kind: use
+  enrollment_required: false
+  action: Book a prepaid Fine Hotels + Resorts or The Hotel Collection stay through
+    Amex Travel
+  url: https://www.americanexpress.com/en-us/travel/
+  notes: Periods are January to June and July to December; the charge must process
+    by 11:59 PM Central on the last day. The Hotel Collection and Airbnb Luxe need
+    two consecutive nights. Effective 2027-01-01, Fine Hotels + Resorts bookings also
+    need a two-night minimum. Prepaid Airbnb Luxe bookings through Amex Travel also
+    qualify. Cancelling or modifying can reverse the credit.
+- id: airline-fee
+  name: Airline Fee Credit
+  amount_usd: 200
+  cadence: annual
+  kind: use
+  enrollment_required: true
+  action: Charge incidental fees (bags, seats, in-flight) from your one selected airline
+    to the card
+  url: https://global.americanexpress.com/card-benefits/enroll/airline-fee-credit/platinum
+  notes: 'Select the airline first; fees charged before selection do not count. The
+    selection can be changed once a year, in January. Qualifying airlines: Alaska,
+    American, Delta, JetBlue, Southwest, United. Tickets, upgrades, miles, gift cards
+    and award tickets are not incidental fees.'
+- id: clear-plus
+  name: CLEAR+ Credit
+  amount_usd: 219
+  cadence: annual
+  kind: auto
+  enrollment_required: false
+  action: Pay the annual CLEAR+ membership with the card
+  url: https://www.clearme.com/
+  notes: Auto-renews; keep the card on file with CLEAR.
+- id: uber-one
+  name: Uber One Credit
+  amount_usd: 120
+  cadence: annual
+  kind: auto
+  enrollment_required: false
+  action: Pay an auto-renewing Uber One membership with the card, with Uber Cash toggled
+    off for it
+  url: https://www.uber.com/uberone
+  notes: Monthly or annual plans both count. Card must be added to Uber directly.
+- id: oura
+  name: Oura Ring Credit
+  amount_usd: 200
+  cadence: annual
+  kind: use
+  enrollment_required: true
+  action: Buy an Oura Ring from Oura's own website with the card
+  url: https://ouraring.com/
+  notes: Ring hardware only. Excludes membership, chargers, warranties, gift cards
+    and other retailers.
+- id: equinox
+  name: Equinox Credit
+  amount_usd: 300
+  cadence: annual
+  kind: auto
+  enrollment_required: true
+  action: Pay a U.S. Equinox membership or a stand-alone Equinox+ subscription with
+    the card
+  url: https://www.equinoxplus.com/
+  notes: Equinox+ bought inside the app or through a third party does not count.
+- id: airbnb-experiences
+  name: Airbnb Experiences Credit
+  amount_usd: 250
+  cadence: annual
+  kind: use
+  enrollment_required: false
+  action: After a prepaid Airbnb Luxe booking through Amex Travel, buy Airbnb Experiences
+    with the card
+  url: https://www.airbnb.com/experiences
+  notes: Locked until an Airbnb Luxe booking through Amex Travel is confirmed in the
+    same calendar year, and reversed if every such booking is cancelled.
+- id: venue-collection
+  name: Venue Collection Concessions Credit
+  amount_usd: 250
+  amount_label: 10% back, up to $250
+  cadence: annual
+  kind: use
+  enrollment_required: true
+  action: Add the offer to the card, then buy concessions at a Venue Collection stadium
+    or arena
+  url: https://www.americanexpress.com/us/credit-cards/card/platinum/
+  notes: Run as an Amex Offer; the current offer ends 2026-12-31. One enrolled card
+    per member.
+- id: amex-offers
+  name: Amex Offers
+  kind: status
+  enrollment_required: false
+  action: Add offers to the card in the Amex app or online account before buying
+  url: https://www.americanexpress.com/us/credit-cards/card/platinum/
+- id: hilton-gold
+  name: Hilton Honors Gold Status
+  kind: status
+  enrollment_required: true
+  action: Enroll in the Benefits section of the Amex account and book eligible stays
+    direct with Hilton
+  url: https://www.americanexpress.com/us/credit-cards/card/platinum/
+- id: marriott-gold
+  name: Marriott Bonvoy Gold Elite Status
+  kind: status
+  enrollment_required: true
+  action: Enroll in the Benefits section of the Amex account and book qualifying rates
+    with Marriott
+  url: https://www.americanexpress.com/us/credit-cards/card/platinum/
+- id: lhw-sterling
+  name: Leaders Club Sterling Status
+  kind: status
+  enrollment_required: true
+  action: Join Leaders Club, then enroll in the Benefits section of the Amex account
+  url: https://www.lhw.com/membership/amex
+- id: car-rental-status
+  name: Car Rental Status (Avis, Hertz, National)
+  kind: status
+  enrollment_required: true
+  action: Enroll in each program through the Amex account and put the member number
+    on the rental
+  url: https://www.americanexpress.com/us/credit-cards/card/platinum/
+  notes: Hertz benefits need the Amex discount code on the reservation and payment
+    with the card.
+- id: lounge-access
+  name: Global Lounge Collection
+  kind: status
+  enrollment_required: true
+  action: Enroll in Priority Pass through the Amex account; show the card at Centurion
+    and partner lounges
+  url: https://www.americanexpress.com/us/credit-cards/card/platinum/
+  notes: Includes 10 Delta Sky Club visits a year when flying an eligible Delta flight.
+    Priority Pass needs enrollment.
+- id: global-entry
+  name: Global Entry or TSA PreCheck Fee Credit
+  amount_usd: 120
+  amount_label: $120 (or up to $85 for TSA PreCheck) every 4 years
+  kind: status
+  enrollment_required: false
+  action: Pay the Global Entry or TSA PreCheck application fee with the card
+  url: https://www.americanexpress.com/expeditedtravel
+- id: cell-phone-protection
+  name: Cell Phone Protection
+  kind: status
+  enrollment_required: false
+  action: Pay the monthly wireless bill with the card to keep coverage active
+  url: https://www.americanexpress.com/CPPTerms
+  notes: Up to $800 per claim, $50 deductible, two approved claims per 12 months.
+- id: soulcycle-bike
+  name: SoulCycle At-Home Bike Credit
+  amount_usd: 300
+  amount_label: $300, once per purchase
+  kind: status
+  enrollment_required: false
+  action: Buy a SoulCycle At-Home Bike from the Equinox+ website with the card
+  url: https://www.equinoxplus.com/bike
+  notes: Needs a 12-month Equinox+ membership. Ends as a card benefit effective 2027-02-01.

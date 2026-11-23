@@ -1,0 +1,156 @@
+name: Watch benefits
+
+# Monthly check of the data against the issuer's page, in four jobs with
+# separate permissions:
+#   page     read-only token. Downloads the page and reduces it to text, which
+#            it hands on as an artifact. No credential of any kind.
+#   watch    read-only token. Runs a model on that text with two file tools
+#            (no shell, no network). Its only output is an artifact holding
+#            the two data files. This is the one job with the model
+#            credential, and it installs nothing but the pinned model tool:
+#            it may ask GitHub for an identity token, which is exchanged for a
+#            short-lived model credential instead of using a stored key, and
+#            every step of a job with that permission could do the same.
+#   commit   no model, no model credential. Takes exactly those two files,
+#            validates them, refuses an update that drops a benefit, rewrites
+#            them from the validated content (so nothing the schema does not
+#            hold survives), tests, and commits them to main.
+#   publish  rebuilds and deploys the feed from main.
+#
+# Nothing is cached, so no job can leave anything for the others.
+#
+# Scheduled runs always use the default branch's copy of this file. A manual
+# run started from another ref would use that ref's copy; only someone who can
+# already write to this repository can do that, and every job refuses any ref
+# but main.
+on:
+  schedule:
+    - cron: "0 15 25 * *"
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: watch
+  cancel-in-progress: false
+
+jobs:
+  page:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-project
+      - name: Download the issuer's page
+        run: scripts/fetch-source.sh "${RUNNER_TEMP}/page.html"
+      - name: Reduce it to text
+        timeout-minutes: 5
+        run: uv run perkolator extract-text --html "${RUNNER_TEMP}/page.html" --out source/page.txt
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: page-text
+          path: source/page.txt
+          if-no-files-found: error
+          retention-days: 1
+
+  watch:
+    needs: page
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: page-text
+          path: source
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: "22"
+          package-manager-cache: false
+      - name: Install the model tool from its lockfile
+        working-directory: watcher
+        run: |
+          npm ci
+          echo "${GITHUB_WORKSPACE}/watcher/node_modules/.bin" >> "${GITHUB_PATH}"
+      - name: Compare the data with the page
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          ANTHROPIC_FEDERATION_RULE_ID: ${{ secrets.ANTHROPIC_FEDERATION_RULE_ID }}
+          ANTHROPIC_ORGANIZATION_ID: ${{ secrets.ANTHROPIC_ORGANIZATION_ID }}
+          ANTHROPIC_SERVICE_ACCOUNT_ID: ${{ secrets.ANTHROPIC_SERVICE_ACCOUNT_ID }}
+          ANTHROPIC_WORKSPACE_ID: ${{ secrets.ANTHROPIC_WORKSPACE_ID }}
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+        run: scripts/run-watcher.sh
+      # Before anything leaves this job: an artifact can be downloaded by others.
+      - name: Screen the data files
+        run: scripts/screen-data-files.sh data/benefits.yaml data/changes.yaml
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: watcher-data
+          path: |
+            data/benefits.yaml
+            data/changes.yaml
+          if-no-files-found: error
+          retention-days: 1
+
+  commit:
+    needs: watch
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: watcher-data
+          path: ${{ runner.temp }}/watcher-data
+      - name: Take the two data files and nothing else
+        run: |
+          cp data/benefits.yaml "${RUNNER_TEMP}/previous-benefits.yaml"
+          scripts/apply-watcher-data.sh "${RUNNER_TEMP}/watcher-data"
+      - uses: ./.github/actions/setup-project
+      # The screen runs again because the rewrite decodes YAML escapes.
+      - name: Validate, rewrite, build and test
+        run: |
+          uv run perkolator validate --verified-today \
+            --keeps-benefits-of "${RUNNER_TEMP}/previous-benefits.yaml"
+          uv run perkolator normalize
+          scripts/screen-data-files.sh data/benefits.yaml data/changes.yaml
+          uv run perkolator build
+          uv run pytest
+      # Both jobs check out the commit the run started from, so this push is
+      # refused, rather than overwriting, if main moved in the meantime.
+      - name: Commit the data to main
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/benefits.yaml data/changes.yaml
+          git commit -m "chore(data): watcher update $(date -u +%F)"
+          git push "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:main
+
+  # A push made with the workflow token starts no other workflow, so the feed
+  # is published from here.
+  publish:
+    needs: commit
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    uses: ./.github/workflows/publish.yml
