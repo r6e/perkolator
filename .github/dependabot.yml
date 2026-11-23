@@ -1,3 +1,5 @@
+# Minor and patch version updates for Python packages and for actions arrive
+# as one pull request each. A major version always gets its own.
 version: 2
 updates:
   - package-ecosystem: uv
@@ -6,6 +8,10 @@ updates:
       interval: weekly
     cooldown:
       default-days: 7
+    groups:
+      python:
+        patterns: ["*"]
+        update-types: [minor, patch]
   - package-ecosystem: github-actions
     directories:
       - /
@@ -14,6 +20,10 @@ updates:
       interval: weekly
     cooldown:
       default-days: 7
+    groups:
+      actions:
+        patterns: ["*"]
+        update-types: [minor, patch]
   # The command line tool the watcher job runs. After a bump, re-check the
   # flags in scripts/run-watcher.sh against the new version.
   - package-ecosystem: npm
